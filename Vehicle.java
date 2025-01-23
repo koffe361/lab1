@@ -55,7 +55,11 @@ public class Vehicle implements Moveable{
 
     // TODO fix this method according to lab pm
     public void gas(double amount){
+        if (amount < 0 || amount > 1) {
+            throw new IllegalArgumentException("Amount in not between 0 and 1");}
         incrementSpeed(amount);
+        if (currentSpeed < 0 || currentSpeed > enginePower) {}
+
     }
 
     // TODO fix this method according to lab pm
