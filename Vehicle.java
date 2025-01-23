@@ -1,7 +1,7 @@
 
 import java.awt.*;
 
-public class Vehicle implements Moveable{
+public class Vehicle implements Moveable {
     protected int nrDoors;
     protected double enginePower;
     protected double currentSpeed;
@@ -15,7 +15,6 @@ public class Vehicle implements Moveable{
     }
 
     Direction currentDirection = Direction.FORWARD;
-
 
     public int getNrDoors(){
         return this.nrDoors;
@@ -66,6 +65,7 @@ public class Vehicle implements Moveable{
     public void brake(double amount){
         decrementSpeed(amount);
     }
+
 
     @Override
     public void move() {
