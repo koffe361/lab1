@@ -1,0 +1,32 @@
+Uppgift 1:
+
+Delade variabler:
+    * public int nrDoors; // Number of doors on the car
+    * public double enginePower; // Engine power of the car
+    * public double currentSpeed; // The current speed of the car
+    * public Color color; // Color of the car
+    * public String modelName; // The car model name
+
+Unika variabler:
+Saab95: turboOn
+Volvo240: trimFactor
+
+Delade Metoder:
+getNrDoors
+getEnginePower
+getCurrentSpeed
+getColor
+setColor
+startEngine
+stopEngine
+gas
+brake
+
+
+Unika metoder:
+Saab95:
+SetTurboOn
+setTurboOff
+
+Volvo240:
+

@@ -20,6 +20,7 @@ public class Volvo240{
     public int getNrDoors(){
         return nrDoors;
     }
+
     public double getEnginePower(){
         return enginePower;
     }
