@@ -28,14 +28,4 @@ public class Saab95 extends Vehicle{
         return enginePower * 0.01 * turbo;
     }
 
-    @Override
-    public void incrementSpeed(double amount){
-        currentSpeed = getCurrentSpeed() + speedFactor() * amount;
-    }
-
-    @Override
-    public void decrementSpeed(double amount){
-        currentSpeed = getCurrentSpeed() - speedFactor() * amount;
-    }
-
 }

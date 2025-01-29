@@ -2,19 +2,20 @@
 import java.awt.*;
 
 public class Vehicle implements Moveable {
-    protected int nrDoors;
+    protected int nrDoors; // alternativt private, men då krävs setMetod
     protected double enginePower;
     protected double currentSpeed;
     protected Color color;
     protected String modelName;
-    protected int x = 0;
-    protected int y = 0;
+    protected double x = 0;
+    protected double y = 0;
 
     public enum Direction {
-        FORWARD, BACKWARD, LEFT, RIGHT
+        NORTH, SOUTH, WEST, EAST
     }
 
-    Direction currentDirection = Direction.FORWARD;
+    Direction currentDirection = Direction.NORTH;
+
 
     public int getNrDoors(){
         return this.nrDoors;
@@ -48,38 +49,41 @@ public class Vehicle implements Moveable {
         return 0;
     };
 
-    public void incrementSpeed(double amount){};
+    private void incrementSpeed(double amount){
+        currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount, enginePower);
+    }
 
-    public void decrementSpeed(double amount){};
+    private void decrementSpeed(double amount){
+        currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount,0);
+    }
 
     // TODO fix this method according to lab pm
     public void gas(double amount){
-        if (amount < 0 || amount > 1) {
-            throw new IllegalArgumentException("Amount in not between 0 and 1");}
+        if (amount < 0.0 || amount > 1.0) {
+            throw new IllegalArgumentException("Amount too low or too high");}
         incrementSpeed(amount);
-        if (currentSpeed < 0 || currentSpeed > enginePower) {}
-
     }
 
     // TODO fix this method according to lab pm
     public void brake(double amount){
+        if (amount < 0 || amount > 1) {
+            throw new IllegalArgumentException("Amount too low or too high");}
         decrementSpeed(amount);
     }
-
 
     @Override
     public void move() {
         switch (currentDirection) {
-            case RIGHT:
+            case EAST:
                 this.x += currentSpeed;
                 break;
-            case LEFT:
+            case WEST:
                 this.x -= currentSpeed;
                 break;
-            case BACKWARD:
+            case SOUTH:
                 this.y -= currentSpeed;
                 break;
-            case FORWARD:
+            case NORTH:
                 this.y += currentSpeed;
                 break;
         }
@@ -88,17 +92,17 @@ public class Vehicle implements Moveable {
     @Override
     public void turnLeft() {
         switch (currentDirection) {
-            case FORWARD:
-                currentDirection = Direction.LEFT;
+            case NORTH:
+                currentDirection = Direction.WEST;
                 break;
-            case LEFT:
-                currentDirection = Direction.BACKWARD;
+            case WEST:
+                currentDirection = Direction.SOUTH;
                 break;
-            case BACKWARD:
-                currentDirection = Direction.RIGHT;
+            case SOUTH:
+                currentDirection = Direction.EAST;
                 break;
-            case RIGHT:
-                currentDirection = Direction.FORWARD;
+            case EAST:
+                currentDirection = Direction.NORTH;
                 break;
         }
     }
@@ -106,17 +110,17 @@ public class Vehicle implements Moveable {
     @Override
     public void turnRight() {
         switch (currentDirection) {
-            case FORWARD:
-                currentDirection = Direction.RIGHT;
+            case NORTH:
+                currentDirection = Direction.EAST;
                 break;
-            case RIGHT:
-                currentDirection = Direction.BACKWARD;
+            case EAST:
+                currentDirection = Direction.SOUTH;
                 break;
-            case BACKWARD:
-                currentDirection = Direction.LEFT;
+            case SOUTH:
+                currentDirection = Direction.WEST;
                 break;
-            case LEFT:
-                currentDirection = Direction.FORWARD;
+            case WEST:
+                currentDirection = Direction.NORTH;
                 break;
         }
     }

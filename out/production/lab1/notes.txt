@@ -30,3 +30,7 @@ setTurboOff
 
 Volvo240:
 
+Gas:
+intervall [0,1]
+inte kunna sänka farten
+
