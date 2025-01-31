@@ -1,9 +1,10 @@
 import java.awt.*;
 
-public class Volvo240 extends Vehicle{
+public class Volvo240 extends Car{
 
     public final static double trimFactor = 1.25; // unik för Volvo240
-    
+
+
     public Volvo240(){
      this.nrDoors = 4;
      this.color = Color.black;
@@ -13,8 +14,7 @@ public class Volvo240 extends Vehicle{
     }
 
     @Override
-    public double speedFactor(){
-        return enginePower * 0.01 * trimFactor;
+    public double speedFactor(){return enginePower * 0.01 * trimFactor;
     }
 
 }

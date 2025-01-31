@@ -1,21 +1,30 @@
 
 import java.awt.*;
 
-public class Vehicle implements Moveable {
+public abstract class Car implements Moveable {
     protected int nrDoors; // alternativt private, men då krävs setMetod
     protected double enginePower;
     protected double currentSpeed;
     protected Color color;
     protected String modelName;
-    protected double x = 0;
-    protected double y = 0;
+    private double x = 0;
+    private double y = 0;
+    private Direction currentDirection = Direction.NORTH;
 
-    public enum Direction {
-        NORTH, SOUTH, WEST, EAST
+    public  double getY(){
+        return this.y;
     }
 
-    Direction currentDirection = Direction.NORTH;
+    public  double getX(){
+        return this.x;
+    }
 
+    public Direction getDirection() {
+        return this.currentDirection;
+    }
+    public void setDirection(Direction d) {
+        this.currentDirection = d;
+    }
 
     public int getNrDoors(){
         return this.nrDoors;
@@ -45,9 +54,7 @@ public class Vehicle implements Moveable {
         currentSpeed = 0;
     }
 
-    public double speedFactor(){
-        return 0;
-    };
+    public abstract double speedFactor();
 
     private void incrementSpeed(double amount){
         currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount, enginePower);
