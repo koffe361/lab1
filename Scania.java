@@ -12,12 +12,10 @@ public class Scania extends Truck {
             stopEngine();
     }
 
-
-
-    public void changeAngelScania(double amount) {
+    public void setRampPosition (double amount) {
               if (currentSpeed == 0 && amount >= 0 && amount <= 70) {
                   angle = amount;
-                  if (amount == 0) {
+                  if (amount == 70) {
                       rampPosition = true ;
                   }
                   else rampPosition = false;

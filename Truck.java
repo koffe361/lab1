@@ -1,7 +1,7 @@
 import java.awt.*;
 
-public class Truck extends Car {
-    final boolean raised = true, lowered = false;
+public  abstract class Truck extends Car {
+    final  boolean raised = true, lowered = false;
     public boolean rampPosition;  // Raised/lowered
 
     public Truck() {
