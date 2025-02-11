@@ -13,14 +13,10 @@ public class Scania extends Car implements HasRamp {
             stopEngine();
     }
 
-
-
     @Override
     public double speedFactor() {
         return 0;
     }
-
-
 
 
     public void setRampPosition (double amount) {

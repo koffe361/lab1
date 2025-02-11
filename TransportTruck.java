@@ -12,16 +12,14 @@ public class TransportTruck extends Car implements HasRamp {
         super.modelName = "Transporter";
         super.color = Color.black;
         this.rampPosition = lowered;
-        this.transportableByTruck = false;
     }
 
 
-
-    public void load (Car car) {
+    public <T extends Car & PassengerCar> void load (T car) {
        if (cargo.size() == maxCargo) {
            throw new IllegalArgumentException("Truck is full");
        }
-       if (rampPosition == lowered && car.transportableByTruck && isWithinRange(car)) {
+       if (rampPosition == lowered && isWithinRange(car)) {
             cargo.push(car);
             car.setDirection(this.getDirection());
        }
@@ -87,7 +85,7 @@ public class TransportTruck extends Car implements HasRamp {
         return 0;
     }
 
-    // Moves the truck and uppdates the cars being transportet
+    // Moves the truck and uppdates the cars being transported
     @Override
     public void move() {
         super.move();

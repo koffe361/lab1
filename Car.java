@@ -11,7 +11,6 @@ public abstract class Car implements Moveable {
     private double x = 0;
     private double y = 0;
     private Direction currentDirection = Direction.NORTH;
-    public boolean transportableByTruck = true;
 
     public double getY(){
         return this.y;

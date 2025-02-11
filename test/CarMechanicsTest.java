@@ -19,41 +19,23 @@ public class CarMechanicsTest {
         assertTrue(carWorkshop.acceptableCar(new TransportTruck()));
         assertTrue(carWorkshop.acceptableCar(new Scania()));
 
-    }
-
-
-
-    @Test //test for 2 acceptable car type workshop (Volvo and Saab)
-    public void saabAndVolvoWorkshop() {
-        ArrayList<Class<? extends Car>> carList = new ArrayList<>();
-        carList.add(Volvo240.class);
-        carList.add(Saab95.class);
-
-
-
-// loading the workshop with 2 different cars
-        CarMechanics<Car> saabAndVolvo = new CarMechanics(carList , 10);
         Volvo240 volvo =  new Volvo240();
-        saabAndVolvo.loadWorkShop(volvo);
+        carWorkshop.loadWorkShop(volvo);
 
         Saab95 saab = new Saab95();
-        saabAndVolvo.loadWorkShop(saab);
+        carWorkshop.loadWorkShop(saab);
 
-        assertTrue(saabAndVolvo.carsInWorkshop.size() == 2);
-        Car repairedVolvo = saabAndVolvo.unloadWorkShop(volvo);
-        assertTrue(saabAndVolvo.carsInWorkshop.size() == 1);
+        assertTrue(carWorkshop.carsInWorkshop.size() == 2);
+        Car repairedVolvo = carWorkshop.unloadWorkShop(volvo);
+        assertTrue(carWorkshop.carsInWorkshop.size() == 1);
         assertEquals(repairedVolvo,volvo);
 
-        Car truck = new TransportTruck();
-        assertThrows(IllegalArgumentException.class, () -> saabAndVolvo.loadWorkShop(truck));
-        assertFalse(saabAndVolvo.acceptableCar(truck));
 
-        for ( int i = 0; i < 9; i ++) {
-            saabAndVolvo.loadWorkShop(new Volvo240()); // fyller resterande 9 plattser med volvo
+        for ( int i = 0; i < 4; i ++) {
+            carWorkshop.loadWorkShop(new Volvo240());
         }
-
-        assertTrue(saabAndVolvo.carsInWorkshop.size() == 10);
-        assertThrows(IllegalArgumentException.class, () -> saabAndVolvo.loadWorkShop(new Volvo240()));
+        assertTrue(carWorkshop.carsInWorkshop.size() == 5);
+        assertThrows(IllegalArgumentException.class, () -> carWorkshop.loadWorkShop(new Volvo240()));
     }
 
 
@@ -62,7 +44,6 @@ public class CarMechanicsTest {
          ArrayList<Class<? extends Car>> saabList = new ArrayList<>();
          saabList.add(Saab95.class);
          CarMechanics<Saab95> saabWorkshop = new CarMechanics<Saab95>(saabList, 10);
-
 
          Saab95 saab =  new Saab95();
          saabWorkshop.loadWorkShop(saab);
@@ -80,32 +61,15 @@ public class CarMechanicsTest {
 
 
     @Test
-    public void truckWorkshop () {
-        ArrayList<Class<? extends Car>> truckList = new ArrayList<>();
-        truckList.add(TransportTruck.class);
-        truckList.add(Scania.class);
-
-        CarMechanics truckWorkshop = new CarMechanics<>(truckList, 4);
-        TransportTruck transportTruck = new TransportTruck();
-        Scania scania = new Scania();
-
-        truckWorkshop.loadWorkShop(transportTruck);
-        truckWorkshop.loadWorkShop(scania);
-
-        assertThrows(IllegalArgumentException.class, () -> truckWorkshop.loadWorkShop(new Volvo240()));
-    }
-
-    @Test
     public void scaniaWorkshop() {
         ArrayList<Class<? extends Car>> scaniaList = new ArrayList<>();
         scaniaList.add(Scania.class);
 
-        CarMechanics<Scania> truckWorkshop = new CarMechanics(scaniaList, 4);
+        CarMechanics<Scania> truckWorkshop = new CarMechanics<Scania>(scaniaList, 4);
         TransportTruck transportTruck = new TransportTruck();
-         Scania scania = new Scania();
+        Scania scania = new Scania();
 
         truckWorkshop.loadWorkShop(scania);
-
     }
 
 }

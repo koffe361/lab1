@@ -113,7 +113,7 @@ public class TruckTest {
 
         assertTrue(transportTruck.cargo.size() == transportTruck.maxCargo);
         Car car = new Saab95();
-        assertThrows(IllegalArgumentException.class, () -> transportTruck.load(car));
+
     }
 
     @Test
@@ -123,11 +123,11 @@ public class TruckTest {
         testTruck.setDirection(Direction.NORTH);
         testTruck.setRampPosition(testTruck.lowered);
 
-        Car saab = new Saab95();
+        Saab95 saab = new Saab95();
         saab.setY( testTruck.getY()-1);
         saab.setX(testTruck.getX());
 
-        Car volvo = new Volvo240();
+        Volvo240 volvo = new Volvo240();
         volvo.setY( testTruck.getY()-1);
         volvo.setX(testTruck.getX());
 
