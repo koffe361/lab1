@@ -2,7 +2,8 @@
 import java.awt.*;
 
 public abstract class Car implements Moveable {
-    protected int nrDoors; // alternativt private, men då krävs setMetod
+    
+    protected int nrDoors;
     protected double enginePower;
     protected double currentSpeed;
     protected Color color;
@@ -10,15 +11,15 @@ public abstract class Car implements Moveable {
     private double x = 0;
     private double y = 0;
     private Direction currentDirection = Direction.NORTH;
-    boolean transportableByTruck = true;
+    public boolean transportableByTruck = true;
 
-    public  double getY(){
+    public double getY(){
         return this.y;
     }
 
     public void  setY(double y1) { y = y1 ;}
 
-    public  double getX(){
+    public double getX(){
         return this.x;
     }
 
@@ -27,6 +28,7 @@ public abstract class Car implements Moveable {
     public Direction getDirection() {
         return this.currentDirection;
     }
+
     public void setDirection(Direction d) {
         this.currentDirection = d;
     }

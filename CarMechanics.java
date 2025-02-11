@@ -1,20 +1,10 @@
 import java.util.ArrayList;
 
-public class CarMechanics {
-
-
-//    Uppgift 3: Parametrisk polymorfism
-//    Skapa en representation av en bilverkstad. Följande aspekter ska hanteras:
-//
-//    En verkstad ska kunna ta emot ("lasta"?) ett antal bilar, upp till något max-antal som kan variera mellan olika verkstäder.
-//    Vissa verkstäder ska bara kunna ta emot en viss sorts bilar; andra kan ta emot vilka bilar som helst.
-//    Att försöka lämna in "fel" sorts bil i en verkstad ska ge ett statiskt (compile time) fel.
-//    Vid uthämtning av en bil från verkstaden ska vi kunna få så precis typinformation som möjligt statiskt.
-//            Exempel: För en märkesverkstad som enbart hanterar Volvo 240 bör vi statiskt kunna veta att bilar som hämtas ut från verkstaden alltid är just Volvo 240.
+public class CarMechanics<T extends  Car> {
 
 
     public final ArrayList<Class<? extends Car>> carTypes; // tillåter alla klasser av subtyp till car
-    public ArrayList<Car> carsInWorkshop  = new ArrayList<>();
+    public ArrayList<T> carsInWorkshop  = new ArrayList<>();
     public final int maxCars;
 
 
@@ -24,7 +14,7 @@ public class CarMechanics {
     }
 
 
-    public void loadWorkShop(Car car) {
+    public  void  loadWorkShop(T car) {
         if (!acceptableCar(car)) {throw new IllegalArgumentException("Car is not allowed in here!!");}
         if (carsInWorkshop.size() == maxCars) {
             throw  new IllegalArgumentException("Workshop is full!");
@@ -32,9 +22,9 @@ public class CarMechanics {
         else carsInWorkshop.add(car);
     }
 
-    public Car unloadWorkShop (Car input) {
-        Car carResult = null;
-        for (Car car : carsInWorkshop) {
+    public T unloadWorkShop (T input) { // ändra o se om vi kan fpå ut
+        T carResult = null;
+        for (T car : carsInWorkshop) {
             if (input.equals(car)) {
                 carResult = car;
                 carsInWorkshop.remove(car);
@@ -50,7 +40,8 @@ public class CarMechanics {
         for (Class<? extends Car> car : carTypes ) {
             if (car.isInstance(input)) {
                 currentState = true; // kollar om car är av samma class som tilåtna typer
-            break;}
+            break;
+            }
          }
         return currentState;
     }

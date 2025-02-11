@@ -116,5 +116,40 @@ public class TruckTest {
         assertThrows(IllegalArgumentException.class, () -> transportTruck.load(car));
     }
 
+    @Test
+    public void unloadCar() {
+        TransportTruck testTruck = new TransportTruck();
+        testTruck.stopEngine();
+        testTruck.setDirection(Direction.NORTH);
+        testTruck.setRampPosition(testTruck.lowered);
+
+        Car saab = new Saab95();
+        saab.setY( testTruck.getY()-1);
+        saab.setX(testTruck.getX());
+
+        Car volvo = new Volvo240();
+        volvo.setY( testTruck.getY()-1);
+        volvo.setX(testTruck.getX());
+
+        testTruck.load(saab);
+        testTruck.load(volvo);
+
+        testTruck.setRampPosition(testTruck.raised);
+        testTruck.startEngine();
+        testTruck.gas(0.4);
+        testTruck.move();
+
+        testTruck.stopEngine();
+        testTruck.setRampPosition(testTruck.lowered);
+
+        int sizeBefore = testTruck.cargo.size();
+        Car car = testTruck.unload();
+        int sizeAfter = testTruck.cargo.size();
+        testTruck.move();
+        assertEquals(car, volvo);
+        assertTrue(sizeAfter == sizeBefore -1);
+        assertTrue(car.getX() == testTruck.getX() && car.getY() == testTruck.getY()-1);
+
+    }
 }
 
