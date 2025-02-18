@@ -1,6 +1,8 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.invoke.TypeDescriptor;
 import java.util.ArrayList;
 
 /*
@@ -18,6 +20,7 @@ public class CarController {
     // each step between delays.
     private Timer timer = new Timer(delay, new TimerListener());
 
+
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     // A list of cars, modify if needed
@@ -26,9 +29,19 @@ public class CarController {
     //methods:
     public static void main(String[] args) {
         // Instance of this class
-        CarController cc = new CarController();
 
-        cc.cars.add(new Volvo240());
+        Volvo240 volvo = new Volvo240();
+        Saab95 saab95 = new Saab95();
+        Scania scania = new Scania();
+
+        saab95.setY(100);
+
+        scania.setY(200);
+
+        CarController cc = new CarController();
+        cc.cars.add(volvo);
+        cc.cars.add(saab95);
+        cc.cars.add(scania);
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
@@ -43,17 +56,26 @@ public class CarController {
     private class TimerListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
-            for (Car car : cars) {
+            int index = 0;
+
+                for (Car car : cars) {
+                    if (car instanceof Saab95) {
+                        System.out.println(((Saab95) car).turboOn);
+                    }
+
                 carInBounds();
                 car.move();
 
                 int x = (int) Math.round(car.getX());
                 int y = (int) Math.round(car.getY());
 
-                frame.drawPanel.moveit(x, y);
+                frame.drawPanel.moveit(index, x,y);
+
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
-            }
+                index ++;
+
+               }
         }
     }
 
@@ -86,7 +108,6 @@ public class CarController {
         for (Car car : cars) {
             switch (car.getDirection()) {
             case NORTH:
-                System.out.println(car.getY());
                 if (car.getY() - car.currentSpeed <= 0  ) {
 
                     car.stopEngine();
@@ -95,9 +116,7 @@ public class CarController {
                 }
                 break;
             case SOUTH:
-                System.out.println(car.getY());
                 if (car.getY() + car.currentSpeed >= 500 ) {
-                System.out.println("south2");
                     car.stopEngine();
                     car.setDirection(Direction.NORTH);
                     car.startEngine();
