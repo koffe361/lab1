@@ -10,7 +10,7 @@ public abstract class Car implements Moveable {
     protected String modelName;
     private double x = 0;
     private double y = 0;
-    private Direction currentDirection = Direction.NORTH;
+    private Direction currentDirection = Direction.SOUTH;
 
     public double getY(){
         return this.y;
@@ -94,10 +94,10 @@ public abstract class Car implements Moveable {
                 this.x -= currentSpeed;
                 break;
             case SOUTH:
-                this.y -= currentSpeed;
+                this.y += currentSpeed;
                 break;
             case NORTH:
-                this.y += currentSpeed;
+                this.y -= currentSpeed;
                 break;
         }
     }
