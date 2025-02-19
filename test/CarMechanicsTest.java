@@ -12,7 +12,7 @@ public class CarMechanicsTest {
         ArrayList<Class<? extends Car>> carList = new ArrayList<>();
         carList.add(Car.class);
 
-        CarMechanics  carWorkshop = new CarMechanics(carList, 5);
+        CarMechanics  carWorkshop = new CarMechanics(carList, 5, 0 , 0);
 
         assertTrue(carWorkshop.acceptableCar(new Saab95()));
         assertTrue(carWorkshop.acceptableCar(new Volvo240()));
@@ -43,7 +43,7 @@ public class CarMechanicsTest {
      public void saabWorkshop() {
          ArrayList<Class<? extends Car>> saabList = new ArrayList<>();
          saabList.add(Saab95.class);
-         CarMechanics<Saab95> saabWorkshop = new CarMechanics<Saab95>(saabList, 10);
+         CarMechanics<Saab95> saabWorkshop = new CarMechanics<Saab95>(saabList, 10, 0 ,0);
 
          Saab95 saab =  new Saab95();
          saabWorkshop.loadWorkShop(saab);
@@ -65,7 +65,7 @@ public class CarMechanicsTest {
         ArrayList<Class<? extends Car>> scaniaList = new ArrayList<>();
         scaniaList.add(Scania.class);
 
-        CarMechanics<Scania> truckWorkshop = new CarMechanics<Scania>(scaniaList, 4);
+        CarMechanics<Scania> truckWorkshop = new CarMechanics<Scania>(scaniaList, 4, 0 ,0);
         TransportTruck transportTruck = new TransportTruck();
         Scania scania = new Scania();
 

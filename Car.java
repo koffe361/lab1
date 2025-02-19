@@ -11,6 +11,7 @@ public abstract class Car implements Moveable {
     private double x = 0;
     private double y = 0;
     private Direction currentDirection = Direction.SOUTH;
+    public Boolean loadedByWorkshop = false;
 
     public double getY(){
         return this.y;
@@ -86,19 +87,21 @@ public abstract class Car implements Moveable {
 
     @Override
     public void move() {
-        switch (currentDirection) {
-            case EAST:
-                this.x += currentSpeed;
-                break;
-            case WEST:
-                this.x -= currentSpeed;
-                break;
-            case SOUTH:
-                this.y += currentSpeed;
-                break;
-            case NORTH:
-                this.y -= currentSpeed;
-                break;
+        if (!this.loadedByWorkshop) {
+            switch (currentDirection) {
+                case EAST:
+                    this.x += currentSpeed;
+                    break;
+                case WEST:
+                    this.x -= currentSpeed;
+                    break;
+                case SOUTH:
+                    this.y += currentSpeed;
+                    break;
+                case NORTH:
+                    this.y -= currentSpeed;
+                    break;
+            }
         }
     }
 

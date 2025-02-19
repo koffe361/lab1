@@ -24,7 +24,12 @@ public class CarController {
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     // A list of cars, modify if needed
+
+
     ArrayList<Car> cars = new ArrayList<>();
+
+    ArrayList<Class<? extends Car>> carClasses = new ArrayList<>();
+    CarMechanics<Volvo240> volvoWorkShop = new CarMechanics<>(carClasses, 5, 300, 0);
 
     //methods:
     public static void main(String[] args) {
@@ -33,6 +38,8 @@ public class CarController {
         Volvo240 volvo = new Volvo240();
         Saab95 saab95 = new Saab95();
         Scania scania = new Scania();
+
+        volvo.setDirection(Direction.EAST);
 
         saab95.setY(100);
 
@@ -43,6 +50,8 @@ public class CarController {
         cc.cars.add(saab95);
         cc.cars.add(scania);
 
+        cc.carClasses.add(Volvo240.class);
+
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
 
@@ -51,17 +60,25 @@ public class CarController {
     }
 
     /* Each step the TimerListener moves all the cars in the list and tells the
-    * view to update its images. Change this method to your needs.
-    * */
+     * view to update its images. Change this method to your needs.
+     * */
     private class TimerListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
             int index = 0;
 
-                for (Car car : cars) {
-                    if (car instanceof Saab95) {
-                        System.out.println(((Saab95) car).turboOn);
+            for (Car car : cars) {
+                if (car instanceof Scania) {
+                    System.out.println(((Scania) car).rampPosition);
+                }
+
+                if (car instanceof Volvo240) {
+                    if (isWithinRadiusofWorkshop(car, volvoWorkShop.x, volvoWorkShop.y)) {
+                        volvoWorkShop.loadWorkShop((Volvo240) car);
+                        car.setX(volvoWorkShop.x);
+                        car.setY(volvoWorkShop.y);
                     }
+                }
 
                 carInBounds();
                 car.move();
@@ -69,38 +86,84 @@ public class CarController {
                 int x = (int) Math.round(car.getX());
                 int y = (int) Math.round(car.getY());
 
-                frame.drawPanel.moveit(index, x,y);
+                frame.drawPanel.moveit(index, x, y);
 
+
+                System.out.println(volvoWorkShop.carsInWorkshop.size());
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
-                index ++;
-
-               }
+                index++;
+            }
         }
+    }
+
+    public <T extends Car> boolean isWithinRadiusofWorkshop (T car, int x, int y) {
+        if ((car.getY() >= y - 10 && car.getY() <= y + 10)  && (car.getX() >= x - 10 && car.getX() <= x + 10)) {
+            return true;
+        }
+        return false;
     }
 
     // Calls the gas method for each car once
     void gas(int amount) {
         double gas = ((double) amount) / 100;
-       for (Car car : cars
-                ) {
+       for (Car car : cars) {
            if (car.currentSpeed != 0) {
-            car.gas(gas);}
+            car.gas(gas);
+           }
         }
     }
 
     void brake (int amount) {
         double brake = ((double) amount) / 100;
-        for (Car car : cars
-        ) {
+        for (Car car : cars) {
             car.brake(brake);
         }
     }
 
     void startCar() {
-        for (Car car : cars
-        ) {
+        for (Car car : cars) {
             car.startEngine();
+        }
+    }
+
+    void stopCar() {
+        for (Car car : cars) {
+            car.stopEngine();
+        }
+    }
+
+    void turboOn() {
+        for (Car car : cars) {
+            if (car instanceof Saab95) {
+                ((Saab95) car).setTurboOn();
+
+            }
+        }
+    }
+
+    void turboOff() {
+        for (Car car : cars) {
+            if (car instanceof Saab95) {
+                ((Saab95) car).setTurboOff();
+
+            }
+        }
+    }
+
+    void lowerBedButton () {
+        for (Car car : cars) {
+            if (car instanceof Scania) {
+                ((Scania) car).setRampPosition(0);
+            }
+        }
+    }
+
+    void liftBedButton () {
+        for (Car car: cars) {
+            if (car instanceof Scania) {
+                ((Scania) car).setRampPosition(70);
+           }
         }
     }
 
@@ -109,14 +172,13 @@ public class CarController {
             switch (car.getDirection()) {
             case NORTH:
                 if (car.getY() - car.currentSpeed <= 0  ) {
-
                     car.stopEngine();
                     car.setDirection(Direction.SOUTH);
                     car.startEngine();
                 }
                 break;
             case SOUTH:
-                if (car.getY() + car.currentSpeed >= 500 ) {
+                if (car.getY() + car.currentSpeed >= 500) {
                     car.stopEngine();
                     car.setDirection(Direction.NORTH);
                     car.startEngine();
@@ -130,7 +192,7 @@ public class CarController {
                 }
                 break;
             case Direction.EAST:
-                if (car.getX()  + car.currentSpeed >= 500 ) {
+                if (car.getX()  + car.currentSpeed >= 700 ) {
                     car.stopEngine();
                     car.setDirection(Direction.WEST);
                     car.startEngine();
