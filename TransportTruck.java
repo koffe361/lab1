@@ -14,7 +14,6 @@ public class TransportTruck extends Car implements HasRamp {
         this.rampPosition = lowered;
     }
 
-
     public <T extends Car & PassengerCar> void load (T car) {
        if (cargo.size() == maxCargo) {
            throw new IllegalArgumentException("Truck is full");

@@ -7,6 +7,7 @@ public class CarMechanics<T extends  Car> {
     public final int maxCars;
     public int x, y;
 
+
     public CarMechanics(ArrayList<Class<? extends Car>> carTypes, int maxCars, int x, int y) {
         this.carTypes = carTypes;
         this.maxCars = maxCars;
@@ -15,7 +16,7 @@ public class CarMechanics<T extends  Car> {
     }
 
     public void loadWorkShop(T car) {
-        if (!carAlreadyInWorkshop ( car)) {
+        if (!carAlreadyInWorkshop (car)) {
             if (!acceptableCar(car)) {
                 throw new IllegalArgumentException("Car is not allowed in here!!");
             }
