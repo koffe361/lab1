@@ -1,4 +1,8 @@
+import car.Car;
+import car.Saab95;
+import car.Volvo240;
 import org.junit.jupiter.api.Test;
+import position.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,79 +11,79 @@ public class CarTest {
     @Test
     void moveNORTH() {
         Car testCar = new Volvo240(); // Start direction is set to North.
-        double y1 = testCar.getY();
-        double x1 = testCar.getX();
+        double y1 = testCar.position.getY();
+        double x1 = testCar.position.getX();
         testCar.startEngine();
         testCar.move();
-        assertTrue(testCar.getY() >= y1); // Compare the incremented value of y
-        assertTrue(testCar.getX() == x1);// x should have the same value
+        assertTrue(testCar.position.getY() >= y1); // Compare the incremented value of y
+        assertTrue(testCar.position.getX() == x1);// x should have the same value
     }
 
     @Test
     void moveSOUTH() {
         Car testCar = new Volvo240();
-        testCar.setDirection(Direction.SOUTH);
-        double y1 = testCar.getY();
-        double x1 = testCar.getX();
+        testCar.position.setDirection(Direction.SOUTH);
+        double y1 = testCar.position.getY();
+        double x1 = testCar.position.getX();
         testCar.startEngine();
         testCar.move();
-        assertTrue(testCar.getY() <= y1); // y should have the same value
-        assertTrue(testCar.getX() == x1); // Compare the incremented value of x
+        assertTrue(testCar.position.getY() <= y1); // y should have the same value
+        assertTrue(testCar.position.getX() == x1); // Compare the incremented value of x
     }
 
     @Test
     void moveWEST() {
         Car testCar = new Volvo240();
-        testCar.setDirection(Direction.WEST);
-        double y1 = testCar.getY();
-        double x1 = testCar.getX();
+        testCar.position.setDirection(Direction.WEST);
+        double y1 = testCar.position.getY();
+        double x1 = testCar.position.getX();
         testCar.startEngine();
         testCar.move();
-        assertTrue(testCar.getY() == y1); // y should have the same value
-        assertTrue(testCar.getX() <= x1); // Compare the incremented value of x
+        assertTrue(testCar.position.getY() == y1); // y should have the same value
+        assertTrue(testCar.position.getX() <= x1); // Compare the incremented value of x
     }
 
 
     @Test
     void moveEast() {
         Car testCar = new Volvo240(); // Start direction is set to North.
-        testCar.setDirection(Direction.EAST);
-        double y1 = testCar.getY();
-        double x1 = testCar.getX();
+        testCar.position.setDirection(Direction.EAST);
+        double y1 = testCar.position.getY();
+        double x1 = testCar.position.getX();
         testCar.startEngine();
         testCar.move();
-        assertTrue(testCar.getY() == y1); // Compare the incremented value of y
-        assertTrue(testCar.getX() >= x1); //  x should have the same value
+        assertTrue(testCar.position.getY() == y1); // Compare the incremented value of y
+        assertTrue(testCar.position.getX() >= x1); //  x should have the same value
     }
 
 
     @Test
     void turnLeft() {
         Car testCar = new Saab95();
-        testCar.setDirection(Direction.EAST);
+        testCar.position.setDirection(Direction.EAST);
         testCar.turnLeft();
-        assertNotEquals(Direction.EAST,testCar.getDirection() ); // CurrentD != RIGHT
-        assertEquals(Direction.NORTH, testCar.getDirection()); // CurrentD == FORWARD
+        assertNotEquals(Direction.EAST,testCar.position.getDirection() ); // CurrentD != RIGHT
+        assertEquals(Direction.NORTH, testCar.position.getDirection()); // CurrentD == FORWARD
 
-        testCar.setDirection(Direction.WEST);
+        testCar.position.setDirection(Direction.WEST);
         testCar.turnLeft();
-        assertNotEquals(Direction.WEST,testCar.getDirection() ); // CurrentD != LEFT
-        assertEquals(Direction.SOUTH, testCar.getDirection()); // CurrentD == BACKWARD
+        assertNotEquals(Direction.WEST,testCar.position.getDirection() ); // CurrentD != LEFT
+        assertEquals(Direction.SOUTH, testCar.position.getDirection()); // CurrentD == BACKWARD
 
     }
 
     @Test
     void turnRight() {
         Car testCar = new Saab95();
-        testCar.setDirection(Direction.EAST);
+        testCar.position.setDirection(Direction.EAST);
         testCar.turnRight();
-        assertNotEquals(Direction.EAST,testCar.getDirection() ); // CurrentD != RIGHT
-        assertEquals(Direction.SOUTH, testCar.getDirection()); // CurrentD == BACKWARD
+        assertNotEquals(Direction.EAST,testCar.position.getDirection() ); // CurrentD != RIGHT
+        assertEquals(Direction.SOUTH, testCar.position.getDirection()); // CurrentD == BACKWARD
 
-        testCar.setDirection(Direction.WEST);
+        testCar.position.setDirection(Direction.WEST);
         testCar.turnRight();
-        assertNotEquals(Direction.WEST,testCar.getDirection() ); // CurrentD != LEFT
-        assertEquals(Direction.NORTH, testCar.getDirection()); // CurrentD == FORWARD
+        assertNotEquals(Direction.WEST,testCar.position.getDirection() ); // CurrentD != LEFT
+        assertEquals(Direction.NORTH, testCar.position.getDirection()); // CurrentD == FORWARD
 
     }
 
@@ -106,7 +110,7 @@ public class CarTest {
 
         for (double i = 0.0; i <= 1.0; i+= 0.1) {
             double currentSpeedBefore = testSaab.getCurrentSpeed();
-            testSaab.currentSpeed = Math.min(testSaab.getCurrentSpeed() + testSaab.speedFactor() * i, testSaab.enginePower);
+            testSaab.gas(i);
             assertTrue(currentSpeedBefore <= testSaab.getCurrentSpeed());
         }
     }
@@ -115,7 +119,7 @@ public class CarTest {
     void decrementSpeed() {
         Car testSaab = new Saab95();
         testSaab.startEngine();
-        double currentSpeedBefore = testSaab.currentSpeed;
+        double currentSpeedBefore = testSaab.getCurrentSpeed();
 
         for (double i = 0.0; i <= 1.0; i+= 0.1) {
             testSaab.brake(i);
@@ -133,7 +137,7 @@ public class CarTest {
 
         Volvo240 testVolvo = new Volvo240();
         double y = testVolvo.speedFactor();
-        assertEquals(testVolvo.speedFactor(), testVolvo.enginePower * 0.01 * Volvo240.trimFactor);
+        assertEquals(testVolvo.speedFactor(), testVolvo.getEnginePower() * 0.01 * Volvo240.trimFactor);
     }
 
 
